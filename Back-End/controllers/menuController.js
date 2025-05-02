@@ -1,13 +1,11 @@
-const pool = require('./config/db');
+import { getAllMenus } from '../models/menuModel.js';
 
-const getMenu = async (req, res) => {
+export const getMenu = async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM pratos');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Erro ao buscar cardápio' });
+    const pratos = await getAllMenus();
+    res.status(200).json(pratos);
+  } catch (error) {
+    console.error('Erro no controller:', error.message); // Log mais claro
+    res.status(500).json({ erro: 'Erro interno no servidor' }); // Mensagem genérica
   }
 };
-
-module.exports = { getMenu };

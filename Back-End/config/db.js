@@ -1,11 +1,13 @@
-const { Pool } = require('pg');
-require('dotenv').config();
+// config/db.js
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false, // necessário para conexões externas no Supabase
-  },
-});
+dotenv.config();
 
-module.exports = pool;
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY,
+  { auth: { persistSession: false } }
+);
+
+export default supabase; // Usando export padrão
