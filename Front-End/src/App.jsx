@@ -1,20 +1,11 @@
-import React from 'react';
-import { Layout } from 'antd';
-import HomePage from './Pages/Home';
-import './App.css';
+import Home from './components/Home'
 
-const { Content } = Layout;
-
-const App = () => {
+function App() {
   return (
-    <Layout className="app-layout">
-      {/* Você pode adicionar componentes globais aqui como Header, Sidebar, etc */}
-      <Content>
-        <HomePage /> {/* Sua página Home */}
-      </Content>
-      {/* Footer global pode ser adicionado aqui */}
-    </Layout>
-  );
-};
+    <div className="app">
+      <Home />
+    </div>
+  )
+}
 
-export default App;
+export default App
