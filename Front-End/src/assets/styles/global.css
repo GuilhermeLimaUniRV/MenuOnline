@@ -1,0 +1,21 @@
+/* Reset básico e estilos globais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Estilos para o antd podem ser sobrescritos aqui */
+  .ant-layout {
+    background: #fff;
+  }
+  
+  /* Classes utilitárias */
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-1 { margin-top: 4px; }
+  .mt-2 { margin-top: 8px; }
+  .mt-3 { margin-top: 16px; }
+  /* ... outras classes utilitárias conforme necessário */
