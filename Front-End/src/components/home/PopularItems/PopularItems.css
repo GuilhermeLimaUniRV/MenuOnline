@@ -1,0 +1,7 @@
+.food-image-placeholder {
+    height: 150px;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
