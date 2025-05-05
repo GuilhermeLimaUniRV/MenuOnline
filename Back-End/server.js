@@ -1,16 +1,22 @@
 import express from 'express';
+import cors from 'cors';
 import pratoRoutes from './routes/pratoRoutes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
-import 'dotenv/config';
 
 const app = express();
+
+// Habilita CORS para todas as origens e métodos
+app.use(cors());
 app.use(express.json());
 
-// Rotas
-app.use('/api/pratos', pratoRoutes);
+// Não é mais necessário; com app.use(cors()) já funciona:
+// app.options('*', cors());
+
+// Suas rotas
+app.use('/api/pratos',    pratoRoutes);
 app.use('/api/categorias', categoriaRoutes);
-app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/pedidos',    pedidoRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
