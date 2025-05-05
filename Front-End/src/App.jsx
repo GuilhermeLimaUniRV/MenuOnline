@@ -1,10 +1,10 @@
-import Home from './Pages/Home'
+import Cardapio from "./Pages/Cardapio"
 
 
 function App() {
   return (
     <div className="app">
-      <Home />
+      <Cardapio />
     </div>
   )
 }

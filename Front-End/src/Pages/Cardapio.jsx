@@ -3,7 +3,7 @@ import { Header }    from '../components/Header';
 import { SearchBar } from '../components/SearchBar';
 import { MenuList }  from '../components/MenuList';
 
-export default function Home() {
+export default function Cardapio() {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
