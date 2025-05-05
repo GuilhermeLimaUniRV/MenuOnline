@@ -1,19 +1,13 @@
 .menu-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .menu-list__status {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: #555;
-  }
-  
-  .menu-list__empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: #888;
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.menu-list__status,
+.menu-list__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #555;
+}

@@ -1,0 +1,28 @@
+.category-filter {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+  }
+  
+  .category-filter__btn {
+    margin-bottom: 0.5rem;
+    flex: 0 0 auto;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #eee;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .category-filter__btn:hover {
+    background: #ddd;
+  }
+  
+  .category-filter__btn--active {
+    background: #333;
+    color: #fff;
+  }
+  

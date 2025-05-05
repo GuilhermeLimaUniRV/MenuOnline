@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/api';       // sua instância Axios
+import api from '../services/api';
 import { DishCard } from './DishCard';
 import './MenuList.css';
 
-export function MenuList({ searchTerm = '' }) {
+export function MenuList({
+  searchTerm = '',
+  category = 'Menu completo'   // string nome da categoria
+}) {
   const [dishes, setDishes]   = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
@@ -26,10 +29,14 @@ export function MenuList({ searchTerm = '' }) {
   if (loading) return <p className="menu-list__status">Carregando pratos…</p>;
   if (error)   return <p className="menu-list__status">Erro: {error.message}</p>;
 
-  // filtra case-insensitive por 'nome'
-  const filtered = dishes.filter(d =>
-    d.nome.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filtered = dishes
+    .filter(d =>
+      d.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter(d =>
+      category === 'Menu completo' ||
+      d.categorias.nome === category    // note o acesso ao relacionamento
+    );
 
   return (
     <div className="menu-list">
