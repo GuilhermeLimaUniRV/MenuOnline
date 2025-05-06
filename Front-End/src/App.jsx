@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';  // Ajuste o caminho conforme necessário
 import Cardapio from './Pages/Cardapio';  // Importe o componente Cardapio
@@ -12,6 +13,4 @@ function App() {
       </Routes>
     </Router>
   );
-}
-
 export default App;
