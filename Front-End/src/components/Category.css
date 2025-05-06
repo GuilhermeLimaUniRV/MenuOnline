@@ -1,0 +1,58 @@
+/* Estilos para a seção de Categorias */
+.categories {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+    overflow-x: auto;  /* Permite rolar horizontalmente se necessário */
+    padding-bottom: 10px;
+  }
+  
+  .category-card {
+    margin: 1.0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;  /* Aumentando o padding para mais espaçamento */
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    width: 220px;  /* Aumentando a largura do card */
+    height: 180px;  /* Diminuindo a altura do card */
+    box-shadow: 0 4px 10px rgba(32, 22, 22, 0.1);
+  }
+  
+  .category-card:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+  }
+  
+  .category-icon img {
+    width: 100%;  /* A imagem ocupa 100% da largura do card */
+    height: 60%;  /* A imagem ocupa 60% da altura do card, reduzindo a altura */
+    object-fit: cover;  /* A imagem ocupa o espaço sem distorcer */
+    border-radius: 10px;
+  }
+  
+  .category-card span {
+    font-family: 'Poppins', sans-serif;  /* Usando uma fonte mais estilosa */
+    margin-top: 10px;
+    font-size: 1.8rem;  /* Aumentando um pouco mais o tamanho da fonte */
+    font-weight: 600;   /* Ajustando o peso da fonte para algo mais elegante */
+    color: #333;  /* Cor do texto */
+    letter-spacing: 1px;  /* Aumentando o espaçamento entre as letras */
+  }
+  
+  /* Estilos para o título "Categorias" */
+  h1 {
+    font-size: 2.8rem;  /* Aumentando o tamanho da fonte do título */
+    font-weight: bold;  /* Deixa o texto em negrito */
+    color: #333;  /* Cor do texto */
+    margin-top: 20px;  /* Espaço acima do título */
+    margin-bottom: 20px;  /* Espaço abaixo do título */
+    margin-left: 1.5rem;
+    letter-spacing: 2px;  /* Aumentando o espaçamento entre as letras do título */
+  }
+  
