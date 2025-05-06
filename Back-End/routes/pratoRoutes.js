@@ -2,11 +2,13 @@ import express from 'express';
 import {
   listarPratos,
   criarPrato,
-  atualizarPrato
+  atualizarPrato,
+  getTopDishes
 } from '../controllers/pratoController.js';
 
 const router = express.Router();
 
+router.get('/mais-pedidos', getTopDishes);
 router.get('/', listarPratos);
 router.post('/', criarPrato);
 router.put('/:id', atualizarPrato);

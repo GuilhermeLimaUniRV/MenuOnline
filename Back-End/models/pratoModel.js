@@ -43,3 +43,17 @@ export const updatePrato = async (id, dados) => {
   if (error) throw new Error(error.message);
   return data[0];
 };
+
+export const getTopDishes = async () => {
+  const { data, error } = await supabase
+    .from('pratos')  // Tabela de pratos
+    .select('id, nome, descricao, preco, imagem_base64')  // Selecionando colunas
+    .order('id', { ascending: false })  // Ordena os pratos pela quantidade de pedidos (ajuste conforme necessário)
+    .limit(5);  // Limita para os 5 mais pedidos
+
+  if (error) {
+    throw new Error(error.message);  // Se houver erro na consulta
+  }
+
+  return data;
+};

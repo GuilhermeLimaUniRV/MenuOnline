@@ -1,4 +1,5 @@
 import * as pratoModel from '../models/pratoModel.js';
+import supabase from '../config/db.js';
 
 // GET /api/pratos
 export const listarPratos = async (req, res) => {
@@ -34,5 +35,15 @@ export const atualizarPrato = async (req, res) => {
     res.json(pratoAtualizado);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+
+export const getTopDishes = async (req, res) => {
+  try {
+    const pratos = await pratoModel.getTopDishes();  // Chamando o método do model
+    res.status(200).json(pratos);  // Retorna os pratos no formato JSON
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao buscar pratos mais pedidos' });  // Se ocorrer erro, retorna o erro
   }
 };
