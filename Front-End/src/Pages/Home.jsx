@@ -5,7 +5,7 @@ import { Category } from "../components/Category";
 export default function Home() {
     return (
         <div>
-            <Header />
+            <Header name={"Menu Online"}></Header>
             <TopDishes />
             < Category />
         </div>

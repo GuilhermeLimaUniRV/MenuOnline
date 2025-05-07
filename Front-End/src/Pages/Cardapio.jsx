@@ -59,7 +59,7 @@ export default function Cardapio() {
         <IoArrowBack size={24} /> {/* Ícone de seta para voltar */}
       </button>
 
-      <Header />
+      <Header name={"Menu Online"}></Header>
       
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
       <CategoryFilter
