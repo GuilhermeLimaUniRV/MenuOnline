@@ -3,6 +3,7 @@ import cors from 'cors';
 import pratoRoutes from './routes/pratoRoutes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import pedidoRoutes from './routes/pedidoRoutes.js';
+import cupomRoutes from './routes/cupomRoutes.js';
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use('/api/pratos',    pratoRoutes);
 app.use('/api/categorias', categoriaRoutes);
 app.use('/api/pedidos',    pedidoRoutes);
+app.use('/api/cupons', cupomRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
