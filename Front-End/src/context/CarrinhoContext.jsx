@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import api from '../services/api';
 
 const CarrinhoContext = createContext();
 
@@ -8,7 +9,7 @@ export const CarrinhoProvider = ({ children }) => {
   const adicionarItem = (produto) => {
     setCarrinho((prev) => {
       const itemExistente = prev.find(item => item.id === produto.id);
-      
+
       if (itemExistente) {
         return prev.map(item =>
           item.id === produto.id
@@ -16,7 +17,7 @@ export const CarrinhoProvider = ({ children }) => {
             : item
         );
       }
-      
+
       return [...prev, { ...produto, quantidade: 1 }];
     });
   };
@@ -39,13 +40,48 @@ export const CarrinhoProvider = ({ children }) => {
   };
 
   const valorTotal = carrinho.reduce(
-    (total, item) => total + (item.preco * item.quantidade), 
+    (total, item) => total + (item.preco * item.quantidade),
     0
   );
+  // Adicione estas funções ao seu CarrinhoProvider
+  const [cupom, setCupom] = useState(null);
+  const [descontoAplicado, setDescontoAplicado] = useState(0);
+
+  const aplicarCupom = async (codigoCupom) => {
+    try {
+      // Substitua por sua chamada à API que verifica o cupom
+      const response = await api.get(`/cupons/${codigoCupom}`);
+      const cupomValido = response.data;
+      console.log(response)
+
+      if (!cupomValido) {
+        throw new Error('Cupom inválido');
+      }
+
+      // Verifica validade
+      if (new Date(cupomValido.data_validade) < new Date()) {
+        throw new Error('Cupom expirado');
+      }
+
+      setCupom(cupomValido);
+      setDescontoAplicado(cupomValido.percentual_desconto);
+      return { success: true, desconto: cupomValido.percentual_desconto };
+    } catch (error) {
+      setCupom(null);
+      setDescontoAplicado(0);
+      return { success: false, message: error.message };
+    }
+  };
+
+  const valorComDesconto = valorTotal * (1 - descontoAplicado / 100);
 
   return (
     <CarrinhoContext.Provider
       value={{
+        cupom,
+        descontoAplicado,
+        aplicarCupom,
+        valorComDesconto,
         carrinho,
         adicionarItem,
         removerItem,

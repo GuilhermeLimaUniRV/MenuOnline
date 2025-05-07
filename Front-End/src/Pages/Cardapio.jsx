@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';  // Para capturar e atualizar a URL
 import api from '../services/api';
-import { Header } from '../components/Header';
 import { SearchBar } from '../components/SearchBar';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { MenuList } from '../components/MenuList';
+{/* Botão de Voltar para a Home acima do Header */ }
+import { FiArrowLeft } from 'react-icons/fi';
+
 
 // Importando o ícone de seta (ou outro ícone de sua preferência)
-import { IoArrowBack } from 'react-icons/io5';  
+import { IoArrowBack } from 'react-icons/io5';
+import { Header } from '../components/Header';
 
 export default function Cardapio() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,25 +50,12 @@ export default function Cardapio() {
     navigate(`/cardapio?category=${category}`);  // Atualiza a URL com o parâmetro da categoria
   };
 
-  // Função de navegação para voltar para a página Home
-  const goToHome = () => {
-    navigate('/');  // Navega para a Home
-  };
-  const goToCart =() =>{
-    navigate('/cart')
-  };
-
   return (
     <div>
-      {/* Botão de Voltar para a Home acima do Header */}
-      <button onClick={goToHome} className="back-to-home-btn">
-        <IoArrowBack size={24} /> {/* Ícone de seta para voltar */}
-      </button>
-      <button onClick={goToCart}>
-      </button>
-
-      <Header name={"Menu Online"}></Header>
-      
+        <button onClick={() => navigate(-1)} className="btn-voltar">
+          <FiArrowLeft size={18} /> Voltar
+        </button>
+        <Header name={"Cardapio"}></Header>
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
       <CategoryFilter
         categories={categories}
