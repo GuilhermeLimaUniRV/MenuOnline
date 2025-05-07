@@ -61,6 +61,19 @@
 .dish-card__controls {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+}
+
+.dish-card__quantity {
+  min-width: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.dish-card__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .dish-card__btn {

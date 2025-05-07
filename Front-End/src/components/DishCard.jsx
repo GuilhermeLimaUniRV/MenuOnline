@@ -1,14 +1,14 @@
 import React from 'react';
 import './DishCard.css';
+import { useCarrinho } from '../context/CarrinhoContext'; // Ajuste o caminho conforme sua estrutura
 
-export function DishCard({
-  nome,
-  descricao,
-  preco,
-  imagemBase64 = '',
-  onAdd = () => {},
-  onRemove = () => {}
-}) {
+export function DishCard({ id, nome, descricao, preco, imagemBase64 }) {
+  const { adicionarItem, ajustarQuantidade, carrinho } = useCarrinho();
+  
+  // Verifica se o prato já está no carrinho
+  const itemNoCarrinho = carrinho.find(item => item.id === id);
+  const quantidade = itemNoCarrinho ? itemNoCarrinho.quantidade : 0;
+
   const src = imagemBase64.startsWith('data:')
     ? imagemBase64
     : `data:image/jpeg;base64,${imagemBase64}`;
@@ -26,15 +26,23 @@ export function DishCard({
           <div className="dish-card__controls">
             <button
               className="dish-card__btn"
-              aria-label={`Remover ${nome}`}
-              onClick={onRemove}
+              aria-label={`Remover uma unidade de ${nome}`}
+              onClick={() => ajustarQuantidade(id, quantidade - 1)}
+              disabled={quantidade === 0}
             >
               –
             </button>
+            {quantidade > 0 && <span className="dish-card__quantity">{quantidade}</span>}
             <button
               className="dish-card__btn"
-              aria-label={`Adicionar ${nome}`}
-              onClick={onAdd}
+              aria-label={`Adicionar uma unidade de ${nome}`}
+              onClick={() => adicionarItem({
+                id,
+                nome,
+                descricao,
+                preco,
+                imagemBase64
+              })}
             >
               +
             </button>

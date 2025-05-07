@@ -51,6 +51,9 @@ export default function Cardapio() {
   const goToHome = () => {
     navigate('/');  // Navega para a Home
   };
+  const goToCart =() =>{
+    navigate('/cart')
+  };
 
   return (
     <div>
@@ -58,8 +61,10 @@ export default function Cardapio() {
       <button onClick={goToHome} className="back-to-home-btn">
         <IoArrowBack size={24} /> {/* Ícone de seta para voltar */}
       </button>
+      <button onClick={goToCart}>
+      </button>
 
-      <Header />
+      <Header name={"Menu Online"}></Header>
       
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
       <CategoryFilter
