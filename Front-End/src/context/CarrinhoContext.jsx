@@ -75,9 +75,41 @@ export const CarrinhoProvider = ({ children }) => {
 
   const valorComDesconto = valorTotal * (1 - descontoAplicado / 100);
 
+  const confirmarPedido = async () => {
+    try {
+      if (carrinho.length === 0) {
+        throw new Error('Carrinho vazio - adicione itens antes de confirmar');
+      }
+
+      const pedidoData = {
+        itens: carrinho.map(item => ({
+          prato_id: item.id,
+          quantidade: item.quantidade,
+          preco: item.preco
+        })),
+        total: valorComDesconto || valorTotal
+      };
+
+      const response = await api.post('/pedidos', pedidoData);
+
+      // Limpa o carrinho após sucesso
+      setCarrinho([]);
+      setCupom(null);
+      setDescontoAplicado(0);
+
+      return { success: true, pedido: response.data };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.error || error.message
+      };
+    }
+  };
+
   return (
     <CarrinhoContext.Provider
       value={{
+        confirmarPedido,
         cupom,
         descontoAplicado,
         aplicarCupom,

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useCarrinho } from '../context/CarrinhoContext';
 import './Cart.css'
 import { useNavigate } from 'react-router-dom'; // Importe o hook
-import { Header } from '../components/Header';
-import {FiArrowLeft} from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
+import { ConfirmarPedido } from '../components/ConfirmarPedido';
+
 
 const Carrinho = () => {
   const {
@@ -51,7 +52,7 @@ const Carrinho = () => {
       </button>
 
       <h2>Carrinho de Compras</h2>
-      
+
       {carrinho.length === 0 ? (
         <p>Seu carrinho está vazio</p>
       ) : (
@@ -158,6 +159,7 @@ const Carrinho = () => {
           </div>
         </>
       )}
+      <ConfirmarPedido />
     </div>
   );
 };

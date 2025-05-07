@@ -39,6 +39,7 @@ export function TopDishes() {
           popularDishes.map((dish) => (
             <DishCard
               key={dish.id}
+              id={dish.id}
               nome={dish.nome}
               preco={dish.preco}
               imagemBase64={dish.imagem_base64}
