@@ -1,54 +1,82 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';  // Importando o axios para fazer a requisição
-import { useNavigate } from 'react-router-dom';  // Novo hook para navegação no react-router-dom v6
-import './Category.css';  // CSS para o componente
+import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+import './Category.css';
 
 export function Category() {
-  const [categories, setCategories] = useState([]);  // Estado para armazenar as categorias
-  const [loading, setLoading] = useState(true);  // Estado de carregamento
-  const [error, setError] = useState(null);  // Estado para erro
-  const navigate = useNavigate();  // Usando useNavigate para navegação no React Router v6
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Função para buscar categorias da API
   const fetchCategories = async () => {
     try {
-      const response = await api.get('/categorias');  // URL da API para categorias
-      setCategories(response.data);  // Atualiza o estado com os dados das categorias
+      const response = await api.get('/categorias');
+      setCategories(response.data);
     } catch (err) {
       console.error('Erro ao carregar categorias:', err);
-      setError('Não foi possível carregar as categorias');
+      setError('Não foi possível carregar as categorias. Tente recarregar a página.');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategories();  // Chama a função para buscar as categorias
+    fetchCategories();
   }, []);
 
-  // Função para lidar com o clique em uma categoria
   const handleCategoryClick = (category) => {
-    navigate(`/cardapio?category=${category}`);  // Redireciona para o Cardápio com o filtro da categoria
+    navigate(`/cardapio?category=${encodeURIComponent(category)}`);
   };
 
-  // Condicional para exibir status de carregamento ou erro
-  if (loading) return <p>Carregando categorias...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return (
+    <div className="loading-message">
+      <p>Carregando categorias...</p>
+    </div>
+  );
+
+  if (error) return (
+    <div className="error-message">
+      <p>{error}</p>
+      <button 
+        onClick={fetchCategories}
+        style={{
+          marginTop: '1rem',
+          padding: '0.5rem 1rem',
+          background: '#3498db',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        Tentar novamente
+      </button>
+    </div>
+  );
 
   return (
-    <section>
-      <h1 className='title'>Categorias</h1>
-      <div className="categories">
+    <section className="categories-section">
+      <h1 className="categories-title">Categorias</h1>
+      <div className="categories-container">
         {categories.map((category) => (
           <div
             key={category.id}
             className="category-card"
-            onClick={() => handleCategoryClick(category.nome)}  // Ao clicar, filtra por categoria
+            onClick={() => handleCategoryClick(category.nome)}
+            aria-label={`Ver ${category.nome}`}
           >
-            <div className="category-icon">
-              <img src={category.imagem_base64} alt={category.nome} />
+            <div className="category-image-container">
+              <img 
+                src={category.imagem_base64} 
+                alt={category.nome}
+                className="category-image"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/200?text=Sem+Imagem';
+                }}
+              />
             </div>
-            <span>{category.nome}</span>
+            <h2 className="category-name">{category.nome}</h2>
           </div>
         ))}
       </div>

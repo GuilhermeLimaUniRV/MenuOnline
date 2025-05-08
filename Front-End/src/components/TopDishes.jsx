@@ -33,7 +33,7 @@ export function TopDishes() {
   
   return (
     <section className="top-dishes">
-      <h2>Mais Pedidos</h2>
+      <h1>Mais Pedidos</h1>
       <div className="more-ordered">
         {popularDishes.length > 0 ? (
           popularDishes.map((dish) => (

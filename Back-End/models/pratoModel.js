@@ -49,7 +49,7 @@ export const getTopDishes = async () => {
     .from('pratos')  // Tabela de pratos
     .select('id, nome, descricao, preco, imagem_base64')  // Selecionando colunas
     .order('id', { ascending: false })  // Ordena os pratos pela quantidade de pedidos (ajuste conforme necessário)
-    .limit(5);  // Limita para os 5 mais pedidos
+    .limit(6);  // Limita para os 5 mais pedidos
 
   if (error) {
     throw new Error(error.message);  // Se houver erro na consulta
