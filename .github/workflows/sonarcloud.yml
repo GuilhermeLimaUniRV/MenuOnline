@@ -1,0 +1,33 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # ou a versão que você usa
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests (opcional, se tiver)
+        run: npm test
+
+      - name: Run SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.12.0
+        with:
+          projectKey: andreyvo11
+          organization: andrey
+          token: ${{ secrets.SONAR_TOKEN }}
