@@ -33,13 +33,29 @@ jobs:
 
       # === RELEASE & DEPLOYMENT ===
 
+      # Passo 1: Obter a última tag
+      - name: Get the latest tag and increment version
+        id: get_tag
+        run: |
+          # Pega a última tag no repositório
+          TAG=$(git describe --tags --abbrev=0)
+          # Extrai o número da versão (ex: v1.0.12 -> 12)
+          VERSION_NUMBER=$(echo $TAG | sed 's/v1.0.//')
+          # Incrementa o número da versão
+          NEW_VERSION=$((VERSION_NUMBER + 1))
+          # Cria a nova tag
+          NEW_TAG="v1.0.${NEW_VERSION}"
+          echo "Nova tag: $NEW_TAG"
+          # Passa a nova tag como output para ser usada em etapas posteriores
+          echo "::set-output name=new_tag::$NEW_TAG"
+
       - name: Criar Release no GitHub
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
+          tag_name: ${{ steps.get_tag.outputs.new_tag }}  # Usa a nova tag gerada
+          release_name: Release ${{ steps.get_tag.outputs.new_tag }}
           draft: false
           prerelease: false
 
