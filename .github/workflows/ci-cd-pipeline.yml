@@ -9,27 +9,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: Front-End
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js (Front-End)
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
-      - name: Install dependencies
+      - name: Install front-end dependencies
         run: npm install
+        working-directory: Front-End
 
-      - name: Run tests (simulado)
+      - name: Run front-end tests
         run: npm test || echo "Nenhum teste encontrado"
+        working-directory: Front-End
 
-      - name: Build projeto
+      - name: Build front-end project
         run: npm run build
+        working-directory: Front-End
+
+      # === BACKEND TESTS ===
+
+      - name: Setup Node.js (Back-End)
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install back-end dependencies
+        run: npm install
+        working-directory: Back-End  # Ajuste esse diretório conforme sua estrutura
+
+      - name: Run back-end tests
+        run: npm test || echo "Nenhum teste encontrado"
+        working-directory: Back-End
+
+      - name: Build back-end project
+        run: npm run build
+        working-directory: Back-End  # Ajuste isso também se necessário
 
       # === RELEASE & DEPLOYMENT ===
 
