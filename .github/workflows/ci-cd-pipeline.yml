@@ -13,6 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # === Front-End ===
       - name: Setup Node.js (Front-End)
         uses: actions/setup-node@v3
         with:
@@ -30,8 +31,7 @@ jobs:
         run: npm run build
         working-directory: Front-End
 
-      # === BACKEND TESTS ===
-
+      # === Back-End ===
       - name: Setup Node.js (Back-End)
         uses: actions/setup-node@v3
         with:
@@ -39,18 +39,15 @@ jobs:
 
       - name: Install back-end dependencies
         run: npm install
-        working-directory: Back-End  # Ajuste esse diretório conforme sua estrutura
+        working-directory: Back-End
 
       - name: Run back-end tests
         run: npm test || echo "Nenhum teste encontrado"
         working-directory: Back-End
 
-      - name: Build back-end project
-        run: npm run build
-        working-directory: Back-End  # Ajuste isso também se necessário
+      # Removido a etapa de build do back-end, pois não é necessária para JS puro.
 
       # === RELEASE & DEPLOYMENT ===
-
       - name: Criar Release no GitHub
         uses: actions/create-release@v1
         env:
