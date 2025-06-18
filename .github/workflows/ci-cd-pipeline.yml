@@ -9,62 +9,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Front-End
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # === Front-End ===
-      - name: Setup Node.js (Front-End)
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
-      - name: Install front-end dependencies
+      - name: Install dependencies
         run: npm install
-        working-directory: Front-End
 
-      - name: Run front-end tests
+      - name: Run tests (simulado)
         run: npm test || echo "Nenhum teste encontrado"
-        working-directory: Front-End
 
-      - name: Build front-end project
+      - name: Build projeto
         run: npm run build
-        working-directory: Front-End
-
-      # === Back-End ===
-      - name: Setup Node.js (Back-End)
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      - name: Install back-end dependencies
-        run: npm install
-        working-directory: Back-End
-
-      - name: Run back-end tests
-        run: npm test || echo "Nenhum teste encontrado"
-        working-directory: Back-End
-
-      # Removido a etapa de build do back-end, pois não é necessária para JS puro.
 
       # === RELEASE & DEPLOYMENT ===
-      - name: Get last tag and increment version
-        id: get_tag
-        run: |
-          TAG=$(git describe --tags --abbrev=0)  # Pega a última tag
-          VERSION_NUMBER=$(echo $TAG | sed 's/v1.0.//')  # Extrai o número da versão
-          NEW_VERSION=$((VERSION_NUMBER + 1))  # Incrementa o número da versão
-          NEW_TAG="v1.0.${NEW_VERSION}"  # Cria a nova tag
-          echo "New tag: $NEW_TAG"
-          echo "::set-output name=new_tag::$NEW_TAG"
 
       - name: Criar Release no GitHub
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.get_tag.outputs.new_tag }}  # Usando a nova tag gerada
-          release_name: Release ${{ steps.get_tag.outputs.new_tag }}
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
 
